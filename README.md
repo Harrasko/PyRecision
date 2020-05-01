@@ -14,7 +14,7 @@ Pyrecision is a precision python calculator where you can do one line calculatio
 It's supporting **floats** and **integers** without 
 limitations.
 
-Sometimes the output it can be approximated.
+Sometimes the output can be approximated.
 
 ## Usage
 
