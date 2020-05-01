@@ -89,7 +89,10 @@ class PyRecision:
     def __init__(self):
         self.we_use_float = False
         self.anno = 0
-        self.start()
+        try:
+            self.start()
+        except Exception as err:
+            print(f"Are you kidding me... {err}?!")
 
 
 if __name__ == "__main__":
