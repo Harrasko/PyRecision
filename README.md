@@ -19,7 +19,7 @@ Sometimes the output can be approximated.
 ## Usage
 
 ```cpp
-#py -3 calculator.py
+#py -3 pyrecision.py
 
 Enter computation: 25*5*(20+3*(15/2))
 
