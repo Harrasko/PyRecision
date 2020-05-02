@@ -60,9 +60,7 @@ class PyRecision:
     def prime_ecuations_func(self, prime_ecuations, x):
         numbers = re.findall('(\d+(?:\.\d+|))[*\/+-]([*\/+-]?\d+)', prime_ecuations[0])
         symbols = re.findall('[*\/]', prime_ecuations[0])
-        print(numbers[0][0],numbers[0][1])
         result = self.calculator(self.correct_number(numbers[0][0]), self.correct_number(numbers[0][1]), symbols[0])
-        print(result)
         x = re.sub(r'(\d+(?:\.\d+|)(?:\/|\*)(?:\+|\-|)\d+(?:\.\d+|))', str(result), x, 1)
         prime_ecuations = re.findall('(\d+(?:\.\d+|)(?:\/|\*)(?:\+|\-|)\d+(?:\.\d+|))', x)
         if prime_ecuations:
@@ -95,6 +93,7 @@ class PyRecision:
             self.start()
         except Exception as err:
             print(f'\nAre you kidding me... {err}?!')
-            
+
+
 if __name__ == "__main__":
     PyRecision()
