@@ -84,7 +84,7 @@ class PyRecision:
             x = result
         print(f'\nThe result is: {self.correct_number(float(x) if self.we_use_float else x)}')
         if self.anno:
-            print("Tha value is approximate")
+            print("The value is approximate")
         
     def __init__(self):
         self.we_use_float = False
