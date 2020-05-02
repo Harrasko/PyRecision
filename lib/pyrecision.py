@@ -7,14 +7,14 @@ class PyRecision:
         for computation in sub_computation:
             if '(' in computation:
                 computation = self.sub_computations(computation)
-            prime_ecuations = re.findall('(\d+(?:\.\d+|)(?:\/|\*)\d+(?:\.\d+|))', computation)
+            prime_ecuations = re.findall('(\d+(?:\.\d+|)(?:\/|\*)(?:\+|\-|)\d+(?:\.\d+|))', computation)
             if prime_ecuations:
                 computation = self.prime_ecuations_func(prime_ecuations, computation)
-            numbers = re.findall('\d+(?:\.\d+|)', computation)
+            numbers = re.findall('(\d+)[+-]([+-]?\d+)', computation)
             symbols = re.findall('[+*\-\/]', computation)
-            result = numbers[0]
+            result = numbers[0][0]
             syms = 0
-            for number in numbers[+1:]:
+            for number in numbers[0][+1:]:
                 result = self.calculator(result, number, symbols[syms])
                 syms += 1
             x = re.sub(r'(\(.*?\).*)', str(result), x, 1)
@@ -58,33 +58,33 @@ class PyRecision:
             return x+y
 
     def prime_ecuations_func(self, prime_ecuations, x):
-        numbers = re.findall('\d+(?:\.\d+|)', prime_ecuations[0])
-        symbols = re.findall('[*\/\-+]', prime_ecuations[0])
-        result = self.calculator(self.correct_number(numbers[0]), self.correct_number(numbers[1]), symbols[0])
-        x = re.sub(r'(\d+(?:\.\d+|)(?:\/|\*)\d+(?:\.\d+|))', str(result), x, 1)
-        prime_ecuations = re.findall('(\d+(?:\.\d+|)(?:\/|\*)\d+(?:\.\d+|))', x)
+        numbers = re.findall('(\d+)[*\/+-]([*\/+-]?\d+)', prime_ecuations[0])
+        symbols = re.findall('[*\/]', prime_ecuations[0])
+        result = self.calculator(self.correct_number(numbers[0][0]), self.correct_number(numbers[0][1]), symbols[0])
+        x = re.sub(r'(\d+(?:\.\d+|)(?:\/|\*)(?:\+|\-|)\d+(?:\.\d+|))', str(result), x, 1)
+        prime_ecuations = re.findall('(\d+(?:\.\d+|)(?:\/|\*)(?:\+|\-|)\d+(?:\.\d+|))', x)
         if prime_ecuations:
             return self.prime_ecuations_func(prime_ecuations, x)
         return x
 
     def start(self):
-        x = input("Enter computation: ")
+        x = input("\nEnter computation: ")
         x = self.sub_computations(x)
-        prime_ecuations = re.findall('(\d+(?:\.\d+|)(?:\/|\*)\d+(?:\.\d+|))', x)
+        prime_ecuations = re.findall('(\d+(?:\.\d+|)(?:\/|\*)(?:\+|\-|)\d+(?:\.\d+|))', x)
         if prime_ecuations:
             x = self.prime_ecuations_func(prime_ecuations, x)
         symbols = re.findall('\d(?:(\+|\-))', x)
         if symbols:
-            numbers = re.findall('\d+(?:\.\d+|)', x)
-            result = numbers[0]
+            numbers = re.findall('(\d+)[+-]([+-]?\d+)', x)
+            result = numbers[0][0]
             syms = 0
-            for number in numbers[+1:]:
+            for number in numbers[0][+1:]:
                 result = self.calculator(result, number, symbols[syms])
                 syms += 1
             x = result
-        print(f'\nThis was fast --> {self.correct_number(float(x) if self.we_use_float else x)}')
+        print(f'\nThe result is: {self.correct_number(float(x) if self.we_use_float else x)}')
         if self.anno:
-            print("The value is approximate")
+            print("Tha value is approximate")
         
     def __init__(self):
         self.we_use_float = False
@@ -92,7 +92,7 @@ class PyRecision:
         try:
             self.start()
         except Exception as err:
-            print(f"Are you kidding me... {err}?!")
+            print(f'\nAre you kidding me... {err}?!')
 
 
 if __name__ == "__main__":
