@@ -10,7 +10,7 @@ class PyRecision:
             prime_ecuations = re.findall('(\d+(?:\.\d+|)(?:\/|\*)(?:\+|\-|)\d+(?:\.\d+|))', computation)
             if prime_ecuations:
                 computation = self.prime_ecuations_func(prime_ecuations, computation)
-            numbers = re.findall('(\d+(?:\.\d+|))[+-]([+-]?\d+)', computation)
+            numbers = re.findall('(\d+(?:\.\d+|))[+-]([+-]?\d+(?:\.\d+|))', computation)
             symbols = re.findall('[+*\-\/]', computation)
             result = numbers[0][0]
             syms = 0
@@ -58,7 +58,7 @@ class PyRecision:
             return x+y
 
     def prime_ecuations_func(self, prime_ecuations, x):
-        numbers = re.findall('(\d+(?:\.\d+|))[*\/+-]([*\/+-]?\d+)', prime_ecuations[0])
+        numbers = re.findall('(\d+(?:\.\d+|))[*\/+-]([*\/+-]?\d+(?:\.\d+|))', prime_ecuations[0])
         symbols = re.findall('[*\/]', prime_ecuations[0])
         result = self.calculator(self.correct_number(numbers[0][0]), self.correct_number(numbers[0][1]), symbols[0])
         x = re.sub(r'(\d+(?:\.\d+|)(?:\/|\*)(?:\+|\-|)\d+(?:\.\d+|))', str(result), x, 1)
@@ -75,7 +75,7 @@ class PyRecision:
             x = self.prime_ecuations_func(prime_ecuations, x)
         symbols = re.findall('\d(?:(\+|\-))', x)
         if symbols:
-            numbers = re.findall('(\d+(?:\.\d+|))[+-]([+-]?\d+)', x)
+            numbers = re.findall('(\d+(?:\.\d+|))[+-]([+-]?\d+(?:\.\d+|))', x)
             result = numbers[0][0]
             syms = 0
             for number in numbers[0][+1:]:
