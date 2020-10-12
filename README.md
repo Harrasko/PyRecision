@@ -23,7 +23,7 @@ Sometimes the output can be approximated.
 
 Enter computation: 25*5*(20+3*(15/2))
 
-This was fast --> 5312.5
+The result is: 5312.5
 ```
 
 ## Contributing
